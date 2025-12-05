@@ -1,10 +1,13 @@
 data/
 static/uploads/
-__pycache__/
+pycache/
+*.pyc
+*.pyo
+*.pyd
 venv/
 env/
+.env
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
-data/

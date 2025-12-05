@@ -2,26 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hand Gesture Recognition</title>
+    <title>AI Emoji Mirror</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Hand Gesture Recognition ✋</h1>
-        <p>Upload a hand image to identify the gesture</p>
-        
-        <form action="/" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept="image/*" required>
-            <button type="submit">Identify Gesture</button>
-        </form>
 
-        {% if prediction %}
-        <div class="result">
-            <img src="{{ img_url }}" alt="Uploaded Gesture">
-            <h2>Result: {{ prediction }}</h2>
+    <div class="main-container">
+        <h1>AI Emoji Mirror 📸</h1>
+        <p>Upload a hand gesture, and I'll mimic it!</p>
+
+        <div class="result-box">
+            <div class="emoji-display" id="emojiOutput">🤔</div>
+            <h2 id="textOutput">Waiting for image...</h2>
         </div>
-        {% endif %}
+
+        <div class="upload-section">
+            <div class="preview-frame">
+                <img id="userImage" src="https://via.placeholder.com/150?text=Your+Photo" alt="Uploaded Image">
+            </div>
+
+            <input type="file" id="fileInput" accept="image/*" hidden>
+            <label for="fileInput" class="upload-btn">
+                📤 Upload Hand Photo
+            </label>
+        </div>
+
     </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const userImage = document.getElementById('userImage');
+        const emojiOutput = document.getElementById('emojiOutput');
+        const textOutput = document.getElementById('textOutput');
+
+        fileInput.addEventListener('change', function() {
+            const formData = new FormData();
+            formData.append('file', this.files[0]);
+
+            // Show loading state
+            emojiOutput.innerText = "⏳";
+            textOutput.innerText = "Analyzing...";
+
+            // Show local preview immediately
+            userImage.src = URL.createObjectURL(this.files[0]);
+
+            fetch('/predict_emoji', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update the big Emoji
+                emojiOutput.innerText = data.emoji;
+                textOutput.innerText = data.name;
+                
+                // Add a cool pop animation
+                emojiOutput.style.transform = "scale(0.5)";
+                setTimeout(() => {
+                    emojiOutput.style.transform = "scale(1.2)";
+                    setTimeout(() => emojiOutput.style.transform = "scale(1)", 200);
+                }, 100);
+            });
+        });
+    </script>
 </body>
 </html>
