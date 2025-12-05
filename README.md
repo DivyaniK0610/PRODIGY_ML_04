@@ -49,3 +49,52 @@ PRODIGY_ML_04/
 └── README.md               # Project Documentation
 
 
+```
+---
+
+## ⚡ How to Run
+1. Clone the repository (or download the folder).
+
+2. nstall Dependencies:
+```Bash
+pip install -r requirements.txt
+```
+3. Setup Data:
+Download the **LeapGestRecog Dataset**.
+Extract the 00 folder (Subject 00) into the data/ directory so the path resolves to data/00/01_palm/....
+
+4. Run the Engine:
+```Bash
+python app.py
+```
+
+5. View the Results:
+The script will launch a server at http://127.0.0.1:8080.
+Upload an image of your hand to see the Emoji Prediction.
+
+---
+## 📊 Recognizable Gestures
+
+The engine is trained to identify 10 distinct hand commands, mapped to specific emojis:
+
+| Gesture Name | Emoji Output | Description |
+| :--- | :---: | :--- |
+| **Palm** | ✋ | Open hand facing forward |
+| **Fist** | ✊ | Closed fingers (Rock) |
+| **Thumb Up** | 👍 | Thumb extended upward |
+| **OK Sign** | 👌 | Thumb and index forming a circle |
+| **Index** | ☝️ | Index finger pointing up |
+| **L Sign** | 👆 | Thumb and index forming 'L' |
+| **C Sign** | 🤏 | Hand forming a 'C' shape |
+| **Down** | 👇 | Index pointing down |
+
+---
+## 📜 Dataset
+
+* **Source:** Kaggle LeapGestRecog
+* **Subset Used:** Subject 00 (Approx. 2,000 images).
+
+### Preprocessing Pipeline
+* **Grayscale Conversion:** Applied to reduce color noise and computational load.
+* **Resizing:** Images are normalized to **64x64 pixels**.
+* **Flattening:** Converted into **1D feature vectors** (4096 features) to serve as input for the SVM classifier.
