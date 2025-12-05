@@ -2,7 +2,7 @@
 
 **A real-time computer vision system that interprets human hand gestures using a lightweight Support Vector Machine (SVM) architecture.**
 
-![Project Demo](images/hand.png)
+![Project Demo](scr.png)
 ---
 
 ## 🚀 Innovation & Approach
